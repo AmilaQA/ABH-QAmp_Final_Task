@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="PlaceLab suite" verbose="1">
+    <test name="PlaceLab Login test">
+        <classes>
+        </classes>
+    </test>
+    <test name="PlaceLab Duplicate Detection Report Smoke test - create report, open report, delete report">
+        <classes>
+            <class name="com.placeLab.amila.qamp.PlaceLab_Tests.smokeTestSuccessfullyCreateReportDD"/>
+        </classes>
+    </test>
+</suite>
