@@ -1,0 +1,320 @@
+{
+	"id": "7addf3cb-61fe-4d5f-92ec-c228ae265eab",
+	"name": "PlaceLab_API_Smoke_Duplicate_Detection",
+	"timestamp": "2023-06-03T21:29:17.181Z",
+	"collection_id": "24657427-8ba24e28-a92c-4dc3-b788-ff985d1d01ae",
+	"folder_id": 0,
+	"environment_id": "24657427-92b36255-d674-47d9-9900-6f1816cb78f0",
+	"totalPass": 48,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2023-06-03T21:29:11.561Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "1dfbd6f5-c522-49d1-89c5-25857cb3c422",
+			"name": "Valid credentials-token DDR",
+			"url": "https://demo.placelab.com/api/v2/sessions",
+			"time": 143,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 3,
+					"fail": 0
+				}
+			},
+			"times": [
+				461,
+				144,
+				143
+			],
+			"allTests": [
+				{
+					"Status code is 201": true
+				},
+				{
+					"Status code is 201": true
+				},
+				{
+					"Status code is 201": true
+				}
+			]
+		},
+		{
+			"id": "0d7fe24d-84b3-4b3c-8ee6-44061598f412",
+			"name": "Create Duplicate detection report",
+			"url": "https://demo.placelab.com/api/v2/reports/duplicate_detection?name=Duplicate+Detection+Report&categorization_column=CATEGORIES&categorization_column_index=8&standardizer=plab&threshold=0.3&limit=5",
+			"time": 368,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Response has 'id' property": true,
+				"Response has 'state' property": true,
+				"Response 'state' value is 'CREATED'": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response has 'id' property": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response has 'state' property": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response 'state' value is 'CREATED'": {
+					"pass": 3,
+					"fail": 0
+				}
+			},
+			"times": [
+				293,
+				332,
+				368
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Response has 'id' property": true,
+					"Response has 'state' property": true,
+					"Response 'state' value is 'CREATED'": true
+				},
+				{
+					"Status code is 201": true,
+					"Response has 'id' property": true,
+					"Response has 'state' property": true,
+					"Response 'state' value is 'CREATED'": true
+				},
+				{
+					"Status code is 201": true,
+					"Response has 'id' property": true,
+					"Response has 'state' property": true,
+					"Response 'state' value is 'CREATED'": true
+				}
+			]
+		},
+		{
+			"id": "ccd1e7d3-dd9d-4100-a704-06e11bc969ed",
+			"name": "Get status previously created report",
+			"url": "https://demo.placelab.com/api/v2/reports/183329/status",
+			"time": 147,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response state property has one of the values": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response state property has one of the values": {
+					"pass": 3,
+					"fail": 0
+				}
+			},
+			"times": [
+				172,
+				147,
+				147
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response state property has one of the values": true
+				},
+				{
+					"Status code is 200": true,
+					"Response state property has one of the values": true
+				},
+				{
+					"Status code is 200": true,
+					"Response state property has one of the values": true
+				}
+			]
+		},
+		{
+			"id": "30b1a8b0-e8d9-4fce-aa42-ec115ab0db2d",
+			"name": "Get status already created report",
+			"url": "https://demo.placelab.com/api/v2/reports/182740/status",
+			"time": 146,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response has 'state' property": true,
+				"Response 'state' value is 'FINISHED'": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response has 'state' property": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Response 'state' value is 'FINISHED'": {
+					"pass": 3,
+					"fail": 0
+				}
+			},
+			"times": [
+				147,
+				146,
+				146
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response has 'state' property": true,
+					"Response 'state' value is 'FINISHED'": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has 'state' property": true,
+					"Response 'state' value is 'FINISHED'": true
+				},
+				{
+					"Status code is 200": true,
+					"Response has 'state' property": true,
+					"Response 'state' value is 'FINISHED'": true
+				}
+			]
+		},
+		{
+			"id": "ce6ba0df-c94b-4f7e-8234-d927b7aecd9e",
+			"name": "Download previously created Report",
+			"url": "https://demo.placelab.com/api/v2/reports/183329/download",
+			"time": 160,
+			"responseCode": {
+				"code": 409,
+				"name": "Conflict"
+			},
+			"tests": {
+				"Status code is 409": true,
+				"Report not completed successfully": true
+			},
+			"testPassFailCounts": {
+				"Status code is 409": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Report not completed successfully": {
+					"pass": 3,
+					"fail": 0
+				}
+			},
+			"times": [
+				150,
+				147,
+				160
+			],
+			"allTests": [
+				{
+					"Status code is 409": true,
+					"Report not completed successfully": true
+				},
+				{
+					"Status code is 409": true,
+					"Report not completed successfully": true
+				},
+				{
+					"Status code is 409": true,
+					"Report not completed successfully": true
+				}
+			]
+		},
+		{
+			"id": "e373a4e5-7762-423a-ab40-37dac7b757f8",
+			"name": "Download already created Report",
+			"url": "https://demo.placelab.com/api/v2/reports/182740/download",
+			"time": 174,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Body matches string": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 3,
+					"fail": 0
+				},
+				"Body matches string": {
+					"pass": 7,
+					"fail": 0
+				}
+			},
+			"times": [
+				217,
+				170,
+				174
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Body matches string": true
+				},
+				{
+					"Status code is 200": true,
+					"Body matches string": true
+				},
+				{
+					"Status code is 200": true,
+					"Body matches string": true
+				}
+			]
+		}
+	],
+	"count": 3,
+	"totalTime": 3664,
+	"collection": {
+		"requests": [
+			{
+				"id": "1dfbd6f5-c522-49d1-89c5-25857cb3c422",
+				"method": "POST"
+			},
+			{
+				"id": "0d7fe24d-84b3-4b3c-8ee6-44061598f412",
+				"method": "POST"
+			},
+			{
+				"id": "ccd1e7d3-dd9d-4100-a704-06e11bc969ed",
+				"method": "GET"
+			},
+			{
+				"id": "30b1a8b0-e8d9-4fce-aa42-ec115ab0db2d",
+				"method": "GET"
+			},
+			{
+				"id": "ce6ba0df-c94b-4f7e-8234-d927b7aecd9e",
+				"method": "GET"
+			},
+			{
+				"id": "e373a4e5-7762-423a-ab40-37dac7b757f8",
+				"method": "GET"
+			}
+		]
+	}
+}

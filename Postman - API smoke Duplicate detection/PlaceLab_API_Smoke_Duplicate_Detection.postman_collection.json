@@ -1,0 +1,379 @@
+{
+	"info": {
+		"_postman_id": "8ba24e28-a92c-4dc3-b788-ff985d1d01ae",
+		"name": "PlaceLab_API_Smoke_Duplicate_Detection",
+		"description": "# PlaceLab_API_Smoke_Duplicate_Detection\n\nBusiness intelligence meets machine learning - our deduplication service considers the business context of your data, its size, variety, completeness and adopts its machine learning platform to find every single hidden duplicate by provideing sample file for duplicate detection.\n\n_**SMOKE TEST for PlaceLab module**_ Content Classification - Duplicate Detection\n\nTo start smoke API test first user needs to obtain authentication token by running POST request to specified API endpinf from documentation provided on next url link [https://demo.placelab.com/help/content_classification#duplicate_detection_creating_report_via_api](https://demo.placelab.com/help/content_classification#duplicate_detection_creating_report_via_api).\n\n- Url for Duplicate Detection page is accessible;\n- Create new Duplicate Detection report;\n- Retrieve status code for previously created Duplicate Detection report;\n- Download previously created Duplicate Detection report;\n- Download some old Duplicate Detection report (By report ID);\n    \n\n_**Given:**_\n\nAn API endpoint for PlaceLab Duplicate Detection is available.\n\nPostman collection and environment are created.\n\n_**When:**_\n\n- Send a request to the PlaceLab API to retrieve valid token that is going to be used for further actions - POST request (user needs to obtain in request body variable for valid email and password that are added in Placelab environment).\n- Send a request to create a new Duplicate Detection in the PlaceLab API - POST request (user needs to provide in body request form-data: key (File) and value (duplicate_detection_sample.txt).\n- Send a request to download previously created Duplicate Detection report - GET request (by providing variable Report ID from Placelab environment).\n- Send a request to download a specific Duplicate Detection report (some old report) that was already created - GET request (by providing specific Report ID from Placelab Queries page.\n    \n\n_**Then:**_\n\n- Verify that the response for token is successful (200 status code).\n- Verify that the response for creating a new Duplicate Detection report is successful (201 status code) and the response has state CREATED.\n- Verify that the response for retrieving status code is successful (200 status code) and the response has property state vith value RUNING (Report is beeing processed by Placelab) .\n- Verify status code 409 for download report that was just created in POST request because it can not be downloaded while creating Duplicate Detection report is not finished, it takes cca 11 min and after that it can be downloaded.\n- Verify status code 200 for successfully downloaded Duplicate Detection report (download by Report ID) that was already created. Validate response body is not empty and it contains text from downloaded Duplicate Detection report.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24657427",
+		"_collection_link": "https://interstellar-robot-943596.postman.co/workspace/QAmp_2023-PlaceLab~f3094a4b-66e2-4ce8-9919-18cc22c1edf8/collection/24657427-8ba24e28-a92c-4dc3-b788-ff985d1d01ae?action=share&creator=24657427&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Valid credentials-token DDR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"{{email}}\",\r\n    \"password\":\"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/sessions",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Duplicate detection report",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Verify response body elements\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"var Id = jsonData.id;\r",
+							"\r",
+							"pm.environment.set(\"ReportId\", Id);\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"pm.test(\"Response has 'id' property\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"id\");\r",
+							"});\r",
+							"pm.test(\"Response has 'state' property\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"state\");\r",
+							"});\r",
+							"pm.test(\"Response 'state' value is 'CREATED'\", function () {\r",
+							"    pm.expect(responseBody.state).to.equal(\"CREATED\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/Elvin/Downloads/duplicate_detection_sample.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/reports/duplicate_detection?name=Duplicate+Detection+Report&categorization_column=CATEGORIES&categorization_column_index=8&standardizer=plab&threshold=0.3&limit=5",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"reports",
+						"duplicate_detection"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Duplicate+Detection+Report"
+						},
+						{
+							"key": "categorization_column",
+							"value": "CATEGORIES"
+						},
+						{
+							"key": "categorization_column_index",
+							"value": "8"
+						},
+						{
+							"key": "standardizer",
+							"value": "plab"
+						},
+						{
+							"key": "threshold",
+							"value": "0.3"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "categorization_column",
+							"value": "NAME",
+							"disabled": true
+						},
+						{
+							"key": "categorization_column_index",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "standardizer",
+							"value": "plab",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get status previously created report",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Parse the response body as JSON if it's not already parsed\r",
+							" responseBody = pm.response.json();\r",
+							"\r",
+							"// Validate the \"state\" property in the response body\r",
+							"pm.expect([\"CREATED\", \"QUEUED\", \"RUNNING\", \"FINISHED\", \"ERROR\", \"LIMIT EXCEEDED\", \"NO DATA\", \"INVALID FILE\"]).to.include(responseBody.state);\r",
+							"pm.test(\"Response state property has one of the values\", function () {\r",
+							"   pm.expect([\"CREATED\", \"QUEUED\", \"RUNNING\", \"FINISHED\", \"ERROR\", \"LIMIT EXCEEDED\", \"NO DATA\", \"INVALID FILE\"]).to.includes(responseBody.state);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/reports/{{ReportId}}/status",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"reports",
+						"{{ReportId}}",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get status already created report",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Parse the response body as JSON if it's not already parsed\r",
+							"responseBody = pm.response.json();\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has 'state' property\", function () {\r",
+							"   pm.expect(responseBody).to.have.property(\"state\");\r",
+							"});\r",
+							"pm.test(\"Response 'state' value is 'FINISHED'\", function () {\r",
+							"  pm.expect(responseBody.state).to.equal(\"FINISHED\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/reports/182740/status",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"reports",
+						"182740",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download previously created Report",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Verify status code 409 for download report that was just created in POST request because it can not be downloaded because creating Duplicate Detection report is not finished, it takec cca 11min and after that it can be downloaded.\r",
+							"pm.test(\"Status code is 409\", function () {\r",
+							"    pm.response.to.have.status(409);\r",
+							"});\r",
+							"pm.test(\"Report not completed successfully\", () => {\r",
+							"\r",
+							"    pm.expect(pm.response.code).to.eql(409);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/reports/{{ReportId}}/download",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"reports",
+						"{{ReportId}}",
+						"download"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download already created Report",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Verify downolad Duplicate Detection report already created by ID\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"internal_id|id|NAME|LATITUDE|LONGITUDE|COUNTRY|CITY|POSTAL CODE|ADDRESS|STREET|CATEGORIES|PHONE|WEBSITE|NAME_CLUSTER|STREET_CLUSTER|CATEGORIES_CLUSTER|PHONE_CLUSTER|WEBSITE_CLUSTER|LAT_LON_CLUSTER|CLUSTER|DUPLICATE|DUPLICATE_TYPE\");\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"1148|111869|Pulteney Bridge|51.3829896|-2.3578472|GB|Bath|||Pulteney Bridge Over the River Avon|publicservicesgovt.landmarks|||0|0|0|0|0|0|0|False|\");\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"2581|94441|Galerie Georg Nothelfer|52.50751|13.34823|DE|Berlin|||Cornelius Straße 3|arts.galleries|493025759806|http://www.galerie-nothelfer.de|1|1|1|1|1|1|1|False|\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/reports/182740/download",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"reports",
+						"182740",
+						"download"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,8 @@
+LONGITUDE|PHONE|STATE|INTERNAL_ID|COUNTRY|POSTAL_CODE|ID|STREET|CATEGORIES|NAME|CITY|LATITUDE|WEBSITE
+-2.3578472|||1148|GB|BA1 1EE|111869|Pulteney Bridge Over the River Avon|publicservicesgovt.landmarks|Pulteney Bridge|Bath|51.3829896|
+13.34823|493025759806||2581|DE|10787|94441|Cornelius Straße 3|arts.galleries|Galerie Georg Nothelfer|Berlin|52.50751|http://www.galerie-nothelfer.de
+13.2345|1234567889||2233|GB|223344|1234|Somewhere Street 23|restaurant|Coco|Yorkshire|||
+-4.22222|22334|USA|1245||California|65432||Sesamy street|Boutique|Zara|||http://www.zara.com|
+12.22222|2244|USA|1241||vegas|6431||Sesamy street|Food|MCDonalds|||http://www.mcdonalds.com|
+
+
